@@ -11,15 +11,17 @@ public class Room implements IRoom {
     private boolean activated;
     private boolean lit;
     private List<Item> Items;
+    private Map<String, Room> Exits;// = new HashMap<String, Room>();
 
-    public void setItems(Item newItem){
-        this.Items.add(newItem);
-    }
-    public List<Item> getItems(){
-        return this.Items;
+    public void setExits(String exitName, Room room){
+        this.Exits.put(exitName, room);
+        //System.out.println("Exit" +  this.Exits.get(exitName));
     }
 
-    public Map<String, Room> Exits = new HashMap<String, Room>();
+    public Map<String, Room> getExits(){
+        return this.Exits;
+    }
+
 
     public void setName(String newName) {
         this.name = newName;
@@ -45,6 +47,12 @@ public class Room implements IRoom {
     public boolean getLit() {
         return this.lit;
     }
+    public void setItems(Item newItem){
+        this.Items.add(newItem);
+    }
+    public List<Item> getItems(){
+        return this.Items;
+    }
 
     public Room Go(String direction){
         if(Exits.containsKey(direction)){
@@ -52,12 +60,13 @@ public class Room implements IRoom {
         }
         return null;
     }
-    public Room(String roomName, String roomDescription){
-        this.name = roomName;
-        this.description = roomDescription;
+
+    public Room(String roomName, String roomDescription) {
+        setName(roomName);
+        setDescription(roomDescription);
         setActivated(false);
         setLit(false);
-        this.Items = getItems();
+        this.Exits = new HashMap<String, Room>();
     }
 
 
